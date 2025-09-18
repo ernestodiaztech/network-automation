@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+ansible-env/
+
+# Ansible
+*.retry
+.vault_pass
+
+# ContainerLab
+clab-*/
+*.log
+
+# Credentials
+**/vault.yml
+*credentials*
