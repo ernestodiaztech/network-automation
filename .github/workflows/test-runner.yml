@@ -1,0 +1,37 @@
+name: Test GitHub Runner
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  test-runner:
+    runs-on: self-hosted  # This uses YOUR runner
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Test basic commands
+      run: |
+        echo "Testing GitHub Runner!"
+        whoami
+        pwd
+        ls -la
+        
+    - name: Test Python
+      run: |
+        python3 --version
+        pip3 --version
+        
+    - name: Test Docker
+      run: |
+        docker --version
+        sudo docker ps
+        
+    - name: Test ContainerLab
+      run: |
+        containerlab version
