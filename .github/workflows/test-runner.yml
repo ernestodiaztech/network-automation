@@ -5,11 +5,11 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  workflow_dispatch:  # Allows manual triggering
+  workflow_dispatch:
 
 jobs:
   test-runner:
-    runs-on: self-hosted  # This uses YOUR runner
+    runs-on: self-hosted
     
     steps:
     - name: Checkout code
@@ -27,10 +27,10 @@ jobs:
         python3 --version
         pip3 --version
         
-    - name: Test Docker
+    - name: Test Docker (no sudo needed)
       run: |
         docker --version
-        sudo docker ps
+        docker ps
         
     - name: Test ContainerLab
       run: |
