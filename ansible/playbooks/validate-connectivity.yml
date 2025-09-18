@@ -1,0 +1,23 @@
+---
+- name: Validate network connectivity
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Check interface status
+      raw: show interface brief
+      register: interfaces
+      
+    - name: Show interface status
+      debug:
+        msg: "{{ inventory_hostname }} interfaces"
+        
+    - debug:
+        var: interfaces.stdout_lines
+        
+    - name: Check system information
+      raw: show system information
+      register: system_info
+      
+    - name: Display system info
+      debug:
+        var: system_info.stdout_lines

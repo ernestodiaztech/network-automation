@@ -1,0 +1,28 @@
+---
+- name: Configure basic interface settings
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Configure interface descriptions
+      raw: |
+        enter candidate
+        interface ethernet-1/1 description "Configured by Ansible - {{ inventory_hostname }}"
+        interface ethernet-1/49 description "Uplink to spine"
+        commit now
+      when: inventory_hostname in groups['leaves']
+      
+    - name: Configure spine interfaces
+      raw: |
+        enter candidate
+        interface ethernet-1/1 description "Link to leaf1"
+        interface ethernet-1/2 description "Link to leaf2"
+        commit now
+      when: inventory_hostname in groups['spines']
+      
+    - name: Show interface configuration
+      raw: show interface description
+      register: interface_desc
+      
+    - name: Display interface descriptions
+      debug:
+        var: interface_desc.stdout_lines
